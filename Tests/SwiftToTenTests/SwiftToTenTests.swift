@@ -10,8 +10,16 @@ final class SwiftToTenTests: XCTestCase {
         XCTAssertNil(SwiftToTen.recognizeTime(in: "Nothing in this string to convert", calendar: .test))
     }
 
+    func testPostMeridiem() {
+        // 01:37
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "1:37 am", calendar: .test), Date(timeIntervalSince1970: 5820))
+        // 13:37
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "1:37 pm", calendar: .test), Date(timeIntervalSince1970: 49020))
+    }
+
     static var allTests = [
         ("testSomeHours", testSomeHours),
+        ("testPostMeridiem", testPostMeridiem),
     ]
 }
 
