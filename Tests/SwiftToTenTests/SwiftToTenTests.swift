@@ -17,6 +17,15 @@ final class SwiftToTenTests: XCTestCase {
         XCTAssertEqual(SwiftToTen.recognizeTime(in: "1:37 pm", calendar: .test), Date(timeIntervalSince1970: 49020))
     }
 
+    func testOClock() {
+        // 7:00
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "7 o'clock", calendar: .test), Date(timeIntervalSince1970: 25200))
+        // 8:00
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "8 o'clock", calendar: .test), Date(timeIntervalSince1970: 28800))
+        // 14:00
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "2 o'clock in the afternoon", calendar: .test), Date(timeIntervalSince1970: 50400))
+    }
+
     static var allTests = [
         ("testSomeHours", testSomeHours),
         ("testPostMeridiem", testPostMeridiem),
