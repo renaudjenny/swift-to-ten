@@ -11,7 +11,7 @@ public enum SwiftToTen {
             return toMidnightDate
         } else if let pastMidnightDate = pastMidnightDate(time: time, calendar: calendar) {
             return pastMidnightDate
-        } else if let midnightDate = midnightDate(time: time) {
+        } else if let midnightDate = midnightDate(time: time, calendar: calendar) {
             return midnightDate
         }
 
@@ -44,6 +44,13 @@ public enum SwiftToTen {
     }
 
     private static func toMidnightDate(time: String, calendar: Calendar) -> Date? {
+        if time.containsMatch(of: "[q|Q]uarter to [m|M]idnight") {
+            return calendar.date(bySettingHour: 23, minute: 45, second: 0, of: epoch)
+        }
+        if time.containsMatch(of: "[h|H]alf to [m|M]idnight") {
+            return calendar.date(bySettingHour: 23, minute: 30, second: 0, of: epoch)
+        }
+
         guard let minuteString: String = time.firstMatch(of: "(\\d{1,2}) to [m|M]idnight"),
               let minute = Int(minuteString)
         else { return nil }
@@ -52,6 +59,13 @@ public enum SwiftToTen {
     }
 
     private static func pastMidnightDate(time: String, calendar: Calendar) -> Date? {
+        if time.containsMatch(of: "[q|Q]uarter past [m|M]idnight") {
+            return calendar.date(bySettingHour: 00, minute: 15, second: 0, of: epoch)
+        }
+        if time.containsMatch(of: "[h|H]alf past [m|M]idnight") {
+            return calendar.date(bySettingHour: 00, minute: 30, second: 0, of: epoch)
+        }
+
         guard let minuteString: String = time.firstMatch(of: "(\\d{1,2}) past [m|M]idnight"),
               let minute = Int(minuteString)
         else { return nil }
@@ -59,9 +73,9 @@ public enum SwiftToTen {
         return calendar.date(bySettingHour: 0, minute: minute, second: 0, of: epoch)
     }
 
-    private static func midnightDate(time: String) -> Date? {
+    private static func midnightDate(time: String, calendar: Calendar) -> Date? {
         if time.containsMatch(of: "[m|M]idnight") {
-            return Date(timeIntervalSince1970: 0)
+            return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: epoch)
         }
         return nil
     }

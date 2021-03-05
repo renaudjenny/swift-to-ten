@@ -44,6 +44,26 @@ final class SwiftToTenTests: XCTestCase {
         XCTAssertEqual(SwiftToTen.recognizeTime(in: "20 past midnight", calendar: .test), Date(timeIntervalSince1970: 1200))
     }
 
+    func testQuarterToMidnight() {
+        // 23:45
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "quarter to midnight", calendar: .test), Date(timeIntervalSince1970: 85500))
+    }
+
+    func testQuarterPastMidnight() {
+        // 00:15
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "quarter past midnight", calendar: .test), Date(timeIntervalSince1970: 900))
+    }
+
+    func testHalfToMidnight() {
+        // 23:30
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "half to midnight", calendar: .test), Date(timeIntervalSince1970: 84600))
+    }
+
+    func testHalfPastMidnight() {
+        // 00:30
+        XCTAssertEqual(SwiftToTen.recognizeTime(in: "half past midnight", calendar: .test), Date(timeIntervalSince1970: 1800))
+    }
+
     static var allTests = [
         ("testSomeHours", testSomeHours),
         ("testPostMeridiem", testPostMeridiem),
@@ -51,6 +71,10 @@ final class SwiftToTenTests: XCTestCase {
         ("testMidnight", testMidnight),
         ("testToMidnight", testToMidnight),
         ("testPastMidnight", testPastMidnight),
+        ("testQuarterToMidnight", testQuarterToMidnight),
+        ("testQuarterPastMidnight", testQuarterPastMidnight),
+        ("testHalfToMidnight", testHalfToMidnight),
+        ("testHalfPastMidnight", testHalfPastMidnight),
     ]
 }
 
