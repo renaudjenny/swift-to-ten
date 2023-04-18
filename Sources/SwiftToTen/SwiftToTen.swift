@@ -1,17 +1,35 @@
 import Foundation
 import SwiftRegex
 
-public enum SwiftToTen {
-    static let epoch = Date(timeIntervalSince1970: 0)
+public struct SwiftToTen {
+    public var recognizeTime: (String, Calendar) -> Date?
 
-    public static func recognizeTime(in time: String, calendar: Calendar) -> Date? {
-        if let oClockDate = oClockDate(time: time, calendar: calendar) {
+    public init(recognizeTime: @escaping (String, Calendar) -> Date?) {
+        self.recognizeTime = recognizeTime
+    }
+
+    public func callAsFunction(time: String, calendar: Calendar) -> Date? {
+        recognizeTime(time, calendar)
+    }
+}
+
+extension SwiftToTen {
+    public static let live = Self(recognizeTime: { RecognizeTime(calendar: $1).recognizeTime(in: $0) })
+}
+
+struct RecognizeTime {
+    let epoch = Date(timeIntervalSince1970: 0)
+
+    var calendar: Calendar
+
+    func recognizeTime(in time: String) -> Date? {
+        if let oClockDate = oClockDate(time: time) {
             return oClockDate
-        } else if let toMidnightDate = toMidnightDate(time: time, calendar: calendar) {
+        } else if let toMidnightDate = toMidnightDate(time: time) {
             return toMidnightDate
-        } else if let pastMidnightDate = pastMidnightDate(time: time, calendar: calendar) {
+        } else if let pastMidnightDate = pastMidnightDate(time: time) {
             return pastMidnightDate
-        } else if let midnightDate = midnightDate(time: time, calendar: calendar) {
+        } else if let midnightDate = midnightDate(time: time) {
             return midnightDate
         }
 
@@ -29,7 +47,7 @@ public enum SwiftToTen {
         return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: epoch)
     }
 
-    private static func oClockDate(time: String, calendar: Calendar) -> Date? {
+    private func oClockDate(time: String) -> Date? {
         guard let hourString: String = time.firstMatch(of: "(\\d{1,2}) o'clock"),
               let hour = Int(hourString)
         else { return nil }
@@ -43,7 +61,7 @@ public enum SwiftToTen {
         return calendar.date(bySettingHour: hour, minute: 0, second: 0, of: epoch)
     }
 
-    private static func toMidnightDate(time: String, calendar: Calendar) -> Date? {
+    private func toMidnightDate(time: String) -> Date? {
         if time.containsMatch(of: "[q|Q]uarter to [m|M]idnight") {
             return calendar.date(bySettingHour: 23, minute: 45, second: 0, of: epoch)
         }
@@ -58,7 +76,7 @@ public enum SwiftToTen {
         return calendar.date(bySettingHour: 23, minute: 60 - minute, second: 0, of: epoch)
     }
 
-    private static func pastMidnightDate(time: String, calendar: Calendar) -> Date? {
+    private func pastMidnightDate(time: String) -> Date? {
         if time.containsMatch(of: "[q|Q]uarter past [m|M]idnight") {
             return calendar.date(bySettingHour: 00, minute: 15, second: 0, of: epoch)
         }
@@ -73,7 +91,7 @@ public enum SwiftToTen {
         return calendar.date(bySettingHour: 0, minute: minute, second: 0, of: epoch)
     }
 
-    private static func midnightDate(time: String, calendar: Calendar) -> Date? {
+    private func midnightDate(time: String) -> Date? {
         if time.containsMatch(of: "[m|M]idnight") {
             return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: epoch)
         }

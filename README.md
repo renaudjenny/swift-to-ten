@@ -1,6 +1,6 @@
 # SwiftToTen
 
-[![Swift Unit Tests](https://github.com/renaudjenny/SwiftToTen/actions/workflows/swift.yml/badge.svg)](https://github.com/renaudjenny/SwiftToTen/actions/workflows/swift.yml)
+[![Swift Unit Tests](https://github.com/renaudjenny/swift-to-ten/actions/workflows/swift.yml/badge.svg)](https://github.com/renaudjenny/swift-to-ten/actions/workflows/swift.yml)
 
 ⏰🇬🇧 Recognize British English time and try converting it to `Date`
 
@@ -53,7 +53,7 @@ print(recognizedTime) // nil
 You can add SwiftToTen to an Xcode project by adding it as a package dependency.
 
 1. From the **File** menu, select **Swift Packages › Add Package Dependency...**
-2. Enter "https://github.com/renaudjenny/SwiftToTen" into the package repository URL test field
+2. Enter "https://github.com/renaudjenny/swift-to-ten" into the package repository URL test field
 
 ### As package dependency
 
@@ -63,13 +63,14 @@ Edit your `Package.swift` to add this library.
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/renaudjenny/SwiftToTen", from: "1.1.0"),
+        .package(url: "https://github.com/renaudjenny/swift-to-ten", from: "1.1.0"),
         ...
     ],
     targets: [
         .target(
             name: "<Your project name>",
-            dependencies: ["SwiftToTen"]),
+            dependencies: [.product(name: "SwiftToTen", package: "swift-to-ten")]
+        ),
         ...
     ]
 )

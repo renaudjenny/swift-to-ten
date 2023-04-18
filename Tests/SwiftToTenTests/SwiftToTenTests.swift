@@ -4,27 +4,27 @@ import XCTest
 final class SwiftToTenTests: XCTestCase {
     func testSomeHours() {
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "12:34", calendar: .test),
+            SwiftToTen.live(time: "12:34", calendar: .test),
             Date(timeIntervalSince1970: 45240)
         )
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "In the middle 12:34 of a string", calendar: .test),
+            SwiftToTen.live(time: "In the middle 12:34 of a string", calendar: .test),
             Date(timeIntervalSince1970: 45240)
         )
 
-        XCTAssertNil(SwiftToTen.recognizeTime(in: "", calendar: .test))
-        XCTAssertNil(SwiftToTen.recognizeTime(in: "Nothing in this string to convert", calendar: .test))
+        XCTAssertNil(SwiftToTen.live(time: "", calendar: .test))
+        XCTAssertNil(SwiftToTen.live(time: "Nothing in this string to convert", calendar: .test))
     }
 
     func testPostMeridiem() {
         // 01:37
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "1:37 am", calendar: .test),
+            SwiftToTen.live(time: "1:37 am", calendar: .test),
             Date(timeIntervalSince1970: 5820)
         )
         // 13:37
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "1:37 pm", calendar: .test),
+            SwiftToTen.live(time: "1:37 pm", calendar: .test),
             Date(timeIntervalSince1970: 49020)
         )
     }
@@ -32,17 +32,17 @@ final class SwiftToTenTests: XCTestCase {
     func testOClock() {
         // 7:00
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "7 o'clock", calendar: .test),
+            SwiftToTen.live(time: "7 o'clock", calendar: .test),
             Date(timeIntervalSince1970: 25200)
         )
         // 8:00
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "8 o'clock", calendar: .test),
+            SwiftToTen.live(time: "8 o'clock", calendar: .test),
             Date(timeIntervalSince1970: 28800)
         )
         // 14:00
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "2 o'clock in the afternoon", calendar: .test),
+            SwiftToTen.live(time: "2 o'clock in the afternoon", calendar: .test),
             Date(timeIntervalSince1970: 50400)
         )
     }
@@ -50,13 +50,13 @@ final class SwiftToTenTests: XCTestCase {
     func testMidnight() {
         // 00:00
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "midnight", calendar: .test),
+            SwiftToTen.live(time: "midnight", calendar: .test),
             Date(timeIntervalSince1970: 0)
         )
 
         // 00:00
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "Midnight", calendar: .test),
+            SwiftToTen.live(time: "Midnight", calendar: .test),
             Date(timeIntervalSince1970: 0)
         )
     }
@@ -64,7 +64,7 @@ final class SwiftToTenTests: XCTestCase {
     func testToMidnight() {
         // 23:50
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "10 to midnight", calendar: .test),
+            SwiftToTen.live(time: "10 to midnight", calendar: .test),
             Date(timeIntervalSince1970: 85800)
         )
     }
@@ -72,7 +72,7 @@ final class SwiftToTenTests: XCTestCase {
     func testPastMidnight() {
         // 00:20
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "20 past midnight", calendar: .test),
+            SwiftToTen.live(time: "20 past midnight", calendar: .test),
             Date(timeIntervalSince1970: 1200)
         )
     }
@@ -80,7 +80,7 @@ final class SwiftToTenTests: XCTestCase {
     func testQuarterToMidnight() {
         // 23:45
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "quarter to midnight", calendar: .test),
+            SwiftToTen.live(time: "quarter to midnight", calendar: .test),
             Date(timeIntervalSince1970: 85500)
         )
     }
@@ -88,7 +88,7 @@ final class SwiftToTenTests: XCTestCase {
     func testQuarterPastMidnight() {
         // 00:15
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "quarter past midnight", calendar: .test),
+            SwiftToTen.live(time: "quarter past midnight", calendar: .test),
             Date(timeIntervalSince1970: 900)
         )
     }
@@ -96,7 +96,7 @@ final class SwiftToTenTests: XCTestCase {
     func testHalfToMidnight() {
         // 23:30
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "half to midnight", calendar: .test),
+            SwiftToTen.live(time: "half to midnight", calendar: .test),
             Date(timeIntervalSince1970: 84600)
         )
     }
@@ -104,7 +104,7 @@ final class SwiftToTenTests: XCTestCase {
     func testHalfPastMidnight() {
         // 00:30
         XCTAssertEqual(
-            SwiftToTen.recognizeTime(in: "half past midnight", calendar: .test),
+            SwiftToTen.live(time: "half past midnight", calendar: .test),
             Date(timeIntervalSince1970: 1800)
         )
     }

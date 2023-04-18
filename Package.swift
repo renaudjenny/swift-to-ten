@@ -10,24 +10,27 @@ let package = Package(
         .macOS(.v11),
     ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "SwiftToTen",
-            targets: ["SwiftToTen"]),
+        .library(name: "SwiftToTen", targets: ["SwiftToTen"]),
+        .library(name: "SwiftToTenDependency", targets: ["SwiftToTenDependency"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-        .package(name: "SwiftRegex", url: "https://github.com/johnno1962/SwiftRegex5", from: "5.2.1")
+        .package(url: "https://github.com/johnno1962/SwiftRegex5", from: "5.2.1"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "0.4.1"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SwiftToTen",
-            dependencies: ["SwiftRegex"]),
-        .testTarget(
-            name: "SwiftToTenTests",
-            dependencies: ["SwiftToTen"]),
+            dependencies: [
+                .product(name: "SwiftRegex", package: "SwiftRegex5"),
+            ]
+        ),
+        .testTarget(name: "SwiftToTenTests", dependencies: ["SwiftToTen"]),
+        .target(
+            name: "SwiftToTenDependency",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                "SwiftToTen",
+            ]
+        ),
     ]
 )
