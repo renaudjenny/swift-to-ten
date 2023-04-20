@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftToTen",
+    name: "swift-to-ten",
     platforms: [
         .iOS(.v14),
         .macOS(.v11),
