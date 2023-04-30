@@ -1,10 +1,12 @@
 # SwiftToTen
 
 [![Swift Unit Tests](https://github.com/renaudjenny/swift-to-ten/actions/workflows/swift.yml/badge.svg)](https://github.com/renaudjenny/swift-to-ten/actions/workflows/swift.yml)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Frenaudjenny%2Fswift-to-ten%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/renaudjenny/swift-to-ten)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Frenaudjenny%2Fswift-to-ten%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/renaudjenny/swift-to-ten)
 
 ⏰🇬🇧 Recognize British English time and try converting it to `Date`
 
-This package contains two libraries that converts a British spoken time like `"It's sevent o'clock."` to an optional `Date` from **epoch** where you can easily extract hour and minute `DateComponents` if you want.
+This package contains two libraries that converts a British spoken time like `"It's seven o'clock."` to an optional `Date` from **epoch** where you can easily extract hour and minute `DateComponents` if you want.
 
 * `SwiftToTen` The main library and has a static function with this signature: `live(time: String, calendar: Calendar) -> Date?` where you simply providing a time like in the example above, see examples below
 * `SwiftToTenDependency` A wrapper around the library above facilitating the integration with [Point-Free Dependencies](https://github.com/pointfreeco/swift-dependencies) library or a project made with The Composable Architecture (TCA).
